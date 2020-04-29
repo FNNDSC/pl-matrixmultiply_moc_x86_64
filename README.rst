@@ -16,7 +16,9 @@ pl-MatMultiply
 Abstract
 --------
 
-An app to ...
+An app to benchmarking GPU by multiplying two random matrix and calculate the time it's spend.
+
+Using numba as gpu api.
 
 
 Synopsis
