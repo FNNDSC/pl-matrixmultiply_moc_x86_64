@@ -125,36 +125,27 @@ Research and Development References
 
 ### Workflow
 
-```
-This graph show the workflow of the original python script (provided by nVidia). One of the difference in our scripts is that we use a file instead of the web camera as graph source. Therefore, this container have to use the ffmpeg to decode the video file. Also, since there is no graphic interface in the server/moc/openshift, we removed the realtime progress showing codes and replace it by saving the output to an output file (output.avi) in the `outgoing` directiory. This means ffmpeg is essentical.
+What this plugin simply does is, when assigned with the COE parameter (`-c`), it will generate a list of COE values, for example, `-c 32,32,128` will generate four parameters of COE as: `[32, 64, 96, 128]`, and it is not necessary to assign the end value as exactly divisible by gap value. (which means you can go with `-c 32,32,100`.
 
-There is another output file called `FramePerSecondRecord.csv`. This file contains the benchmarking results of the plugin. The output should be like this:
-| maximum_fps  | minimum_fps | average_fps |
-|:------------:|:-----------:|:-----------:|
-|                                                                                                                            250.0                                                                                                                          |                                                                     142.86                                                                    |                                                                                                                      239.92                                                                                                                    |
+For each COE value in this list, it will generate square matrix with size to be `(COE x TPB) ^2`, where `TPB` value is determined as 32 in the program, and therefore you have different sizes of matrix to do multiplication.
 
-If you wanna more research details of this project, [check this tutorial.](https://medium.com/better-programming/real-time-object-detection-on-gpus-in-10-minutes-6e8c9b857bb3)
+The program will record this running time along with start time, end time and matrix size, and generate a `.csv` file in your output folder, that's what you can use for benchmarking purpose.
 
 
-(If you run it multiple times , the newest result will be added to the last line of file.)
-
-(Results from a `ppc64le` machine)
-
-This shows the information about the inference time for every frame. We think it shows the data bus latency from cpu/main memory to the GPU.
-```
-
-### Benchmarking result
-```
-On `ppc64le` machine, the typical inference time for each frame is about 4 ms. However in `x86_64` machine, we got about 6~7 ms inference time for every frame. We think the differnece is significant (powerpc is about 40% faster than `x86_64`).
-```
 
 Troubleshoot
 -------
 
+Make sure your `/out` directory has corresponding authorization, you can try:
+
+```
+mkdir in out && chmod 777 out                                       
+```
+
+
 Related Links
 ----------
-
-
+https://medium.com/datathings/benchmarking-blas-libraries-b57fb1c6dc7
 
 ### Docker Images
 PowerPC: https://hub.docker.com/r/fnndsc/pl-matrixmultiply_moc_ppc64
