@@ -1,7 +1,7 @@
 pl-matrixmultiply_moc_x86_64
 ===============
 
-- [pl-matrixmultiply_moc_x86_64](#pl-matrixmultiply-moc-x86_64)
+- [pl-matrixmultiply_moc_x86_64](#pl_matrixmultiply_moc_x86_64)
   * [Description](#description)
   * [Usage](#usage)
     + [Requirements](#requirements)
